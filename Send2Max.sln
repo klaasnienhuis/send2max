@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "console_demo", "console_dem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxScript", "MaxScript\MaxScript.csproj", "{7CCABA4B-AB99-4489-A720-176095D5295A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Send2Max", "Send2Max\Send2Max.csproj", "{8BCC31CE-7770-4AB3-9CA5-AD1DE5F1104F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7CCABA4B-AB99-4489-A720-176095D5295A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CCABA4B-AB99-4489-A720-176095D5295A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CCABA4B-AB99-4489-A720-176095D5295A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCC31CE-7770-4AB3-9CA5-AD1DE5F1104F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCC31CE-7770-4AB3-9CA5-AD1DE5F1104F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCC31CE-7770-4AB3-9CA5-AD1DE5F1104F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCC31CE-7770-4AB3-9CA5-AD1DE5F1104F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

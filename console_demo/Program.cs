@@ -60,7 +60,7 @@ namespace console_demo
             foreach (Process p in scriptTargetProcess)
             {
                 //StringBuilder sb = new StringBuilder("filein @\"" + scriptPath + "\"\r\n");
-                StringBuilder sb = new StringBuilder("teapot()\r\n");
+                StringBuilder sb = new StringBuilder("teapot()");
                 Send2Max.SendCommand(sb,p.MainWindowHandle);
             }
 

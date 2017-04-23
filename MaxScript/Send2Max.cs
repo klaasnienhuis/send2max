@@ -107,9 +107,6 @@ namespace MaxScript
             //find a script editor. There are multiple, one will do
             SearchData sd = GetAllChildHandles(mawWindowHandle, "MXS_Scintilla");
 
-            Console.WriteLine("Scintilla script window handle: {0}", sd.hWnd);
-            Console.WriteLine("Script sent: {0}", theScript.ToString());
-
             //first send the script
             SendMessage(sd.hWnd, WM_SETTEXT, (IntPtr)theScript.Length, theScript.ToString());
             //then press enter to execute
@@ -118,6 +115,7 @@ namespace MaxScript
 
         public static void SendCommand(StringBuilder theScript, IntPtr mainWindowHandle)
         {
+            theScript.Append("\r\n");
             Send(theScript, mainWindowHandle);
         }
 
