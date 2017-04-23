@@ -6,15 +6,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace console_demo
+namespace MaxScript
 {
-    public class SearchData
-    {
-        public string windowName;
-        public IntPtr hWnd;
-    }
-
-    public static class WindowHandleInfo
+    public static class Send2Max
     {
         private delegate bool EnumChildProc(IntPtr hwnd, ref SearchData data);
 
@@ -58,7 +52,7 @@ namespace console_demo
         [DllImport("user32")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc callback, ref SearchData data);
-        
+
         /// <summary>
         /// Enumerate all childwindows of a specific handle and look for a window with 
         /// a certain name
@@ -112,26 +106,27 @@ namespace console_demo
         /// </summary>
         /// <param name="theScript"></param>
         /// <returns></returns>
-        public static int Send2Max(StringBuilder theScript, IntPtr mawWindowHandle)
+        public static int Send(StringBuilder theScript, IntPtr mawWindowHandle)
         {
             int result = 0;
 
 
 
-                //find a script editor. There are multiple, one will do
-                SearchData sd = WindowHandleInfo.GetAllChildHandles(mawWindowHandle, "MXS_Scintilla");
+            //find a script editor. There are multiple, one will do
+            SearchData sd = GetAllChildHandles(mawWindowHandle, "MXS_Scintilla");
 
-                Console.WriteLine("Scintilla script window handle: {0}", sd.hWnd);
-                Console.WriteLine("Script sent: {0}", theScript.ToString());
+            Console.WriteLine("Scintilla script window handle: {0}", sd.hWnd);
+            Console.WriteLine("Script sent: {0}", theScript.ToString());
 
-                //first send the script
-                result = SendMessage(sd.hWnd, WM_SETTEXT, (IntPtr)theScript.Length, theScript.ToString());
-                //then press enter to execute
-                result = SendMessage(sd.hWnd, WM_CHAR, (IntPtr)VK_RETURN, null);
+            //first send the script
+            result = SendMessage(sd.hWnd, WM_SETTEXT, (IntPtr)theScript.Length, theScript.ToString());
+            //then press enter to execute
+            result = SendMessage(sd.hWnd, WM_CHAR, (IntPtr)VK_RETURN, null);
 
 
 
             return result;
         }
+
     }
 }

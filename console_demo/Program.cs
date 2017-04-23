@@ -15,7 +15,7 @@ namespace console_demo
         static void Main(string[] args)
         {
             //First find the 3dsMax processes running
-            Process[] processes = WindowHandleInfo.Get3dsMaxProcesses();
+            Process[] processes = MaxScript.Send2Max.Get3dsMaxProcesses();
             List<Process> scriptTargetProcess = new List<Process>();
 
             //Logic going through three scenarios: max isn't running, one max is running, multiple maxes are running
@@ -62,23 +62,10 @@ namespace console_demo
             {
                 //StringBuilder sb = new StringBuilder("filein @\"" + scriptPath + "\"\r\n");
                 StringBuilder sb = new StringBuilder("teapot()\r\n");
-                int result = WindowHandleInfo.Send2Max(sb,p.MainWindowHandle);
+                int result = MaxScript.Send2Max.Send(sb,p.MainWindowHandle);
                 Console.WriteLine("Result: {0}", result.ToString());
 
             }
-
-
-
-
-            //Process[] processlist = Process.GetProcesses();
-
-            //foreach (Process process in processlist)
-            //{
-            //    if (!String.IsNullOrEmpty(process.MainWindowTitle))
-            //    {
-            //        Console.WriteLine("Process: {0} ID: {1} Window title: {2}", process.ProcessName, process.Id, process.MainWindowTitle);
-            //    }
-            //}
 
             Console.WriteLine("Press a key to exit the program");
             Console.ReadKey();
