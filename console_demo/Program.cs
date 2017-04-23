@@ -14,26 +14,73 @@ namespace console_demo
 
         static void Main(string[] args)
         {
-            //StringBuilder sb = new StringBuilder("filein @\"" + scriptPath + "\"\r\n");
-            StringBuilder sb = new StringBuilder("teapot()\r\n");
-            int result = WindowHandleInfo.Send2Max(sb);
+            //First find the 3dsMax processes running
+            Process[] processes = WindowHandleInfo.Get3dsMaxProcesses();
+            List<Process> scriptTargetProcess = new List<Process>();
 
-
-
-
-
-            Process[] processlist = Process.GetProcesses();
-
-            foreach (Process process in processlist)
+            //Logic going through three scenarios: max isn't running, one max is running, multiple maxes are running
+            if (processes.Length == 0) Console.WriteLine("No 3ds Max instance found. Can't send the script, sorry");
+            if (processes.Length == 1)
             {
-                if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                Console.WriteLine("Found one 3ds Max instance found. Sending the script now");
+                scriptTargetProcess.Add(processes[0]);
+            }
+            if (processes.Length > 1)
+            {
+                Console.WriteLine("Found {0} 3ds Max instance running. Which one do you want to use?", processes.Length);
+                for (int n = 0; n < processes.Length;n++)
                 {
-                    Console.WriteLine("Process: {0} ID: {1} Window title: {2}", process.ProcessName, process.Id, process.MainWindowTitle);
+                    Console.WriteLine("[{0}]: {1}",n,processes[n].MainWindowTitle);
+                }
+                Console.WriteLine("[{0}]: All of them",processes.Length);
+                ConsoleKeyInfo info = Console.ReadKey();
+                Console.WriteLine();
+                int val;
+                Console.WriteLine("You pressed " + info.KeyChar.ToString());
+                if (int.TryParse(info.KeyChar.ToString(), out val))
+                {
+                    if (val <= processes.Length)
+                    {
+                        if (val == processes.Length)
+                        {
+                            scriptTargetProcess = processes.ToList<Process>();
+                        }
+                        else
+                        {
+                            scriptTargetProcess.Add(processes[val]);
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("{0} is not a valid choice, please run the tool again, bye!", info.KeyChar.ToString());
                 }
             }
 
+            //Send the script
+            foreach (Process p in scriptTargetProcess)
+            {
+                //StringBuilder sb = new StringBuilder("filein @\"" + scriptPath + "\"\r\n");
+                StringBuilder sb = new StringBuilder("teapot()\r\n");
+                int result = WindowHandleInfo.Send2Max(sb,p.MainWindowHandle);
+                Console.WriteLine("Result: {0}", result.ToString());
 
-            Console.WriteLine("Result: {0}", result.ToString());
+            }
+
+
+
+
+            //Process[] processlist = Process.GetProcesses();
+
+            //foreach (Process process in processlist)
+            //{
+            //    if (!String.IsNullOrEmpty(process.MainWindowTitle))
+            //    {
+            //        Console.WriteLine("Process: {0} ID: {1} Window title: {2}", process.ProcessName, process.Id, process.MainWindowTitle);
+            //    }
+            //}
+
+            Console.WriteLine("Press a key to exit the program");
             Console.ReadKey();
         }
     }

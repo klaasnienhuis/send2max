@@ -95,13 +95,14 @@ namespace console_demo
             return true;
         }
 
-        private static Process Get3dsmaxHandle()
+        public static Process[] Get3dsMaxProcesses()
         {
             Process[] myMax = Process.GetProcessesByName("3dsmax");
-            if (myMax.Length == 0) return null;
-            if (myMax[0] != null) return myMax[0];
-            if (myMax[0] == null) return null;
-            return null;
+            return myMax;
+            //if (myMax.Length == 0) return null;
+            //if (myMax[0] != null) return myMax[0];
+            //if (myMax[0] == null) return null;
+            //return null;
         }
 
 
@@ -111,18 +112,14 @@ namespace console_demo
         /// </summary>
         /// <param name="theScript"></param>
         /// <returns></returns>
-        public static int Send2Max(StringBuilder theScript)
+        public static int Send2Max(StringBuilder theScript, IntPtr mawWindowHandle)
         {
             int result = 0;
 
-            Process[] myMax = Process.GetProcessesByName("3dsmax");
-            if (myMax.Length == 0) return result;
-            if (myMax[0] != null)
-            {
-                Console.WriteLine("3ds max handle: {0}", myMax[0].MainWindowHandle);
+
 
                 //find a script editor. There are multiple, one will do
-                SearchData sd = WindowHandleInfo.GetAllChildHandles(myMax[0].MainWindowHandle,"MXS_Scintilla");
+                SearchData sd = WindowHandleInfo.GetAllChildHandles(mawWindowHandle, "MXS_Scintilla");
 
                 Console.WriteLine("Scintilla script window handle: {0}", sd.hWnd);
                 Console.WriteLine("Script sent: {0}", theScript.ToString());
@@ -132,7 +129,6 @@ namespace console_demo
                 //then press enter to execute
                 result = SendMessage(sd.hWnd, WM_CHAR, (IntPtr)VK_RETURN, null);
 
-            }
 
 
             return result;
