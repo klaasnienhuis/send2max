@@ -102,7 +102,7 @@ namespace MaxScript
         /// </summary>
         /// <param name="theScript"></param>
         /// <returns></returns>
-        public static void Send(StringBuilder theScript, IntPtr mawWindowHandle)
+        private static void Send(StringBuilder theScript, IntPtr mawWindowHandle)
         {
             //find a script editor. There are multiple, one will do
             SearchData sd = GetAllChildHandles(mawWindowHandle, "MXS_Scintilla");
@@ -115,6 +115,18 @@ namespace MaxScript
             //then press enter to execute
             SendMessage(sd.hWnd, WM_CHAR, (IntPtr)VK_RETURN, null);
         }
+
+        public static void SendCommand(StringBuilder theScript, IntPtr mainWindowHandle)
+        {
+            Send(theScript, mainWindowHandle);
+        }
+
+        public static void SendFile(string thePath, IntPtr mainWindowHandle)
+        {
+            StringBuilder theScript = new StringBuilder("filein @\"" + thePath + "\"\r\n");
+            Send(theScript, mainWindowHandle);
+        }
+
 
     }
 }

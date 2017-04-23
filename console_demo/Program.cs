@@ -61,7 +61,7 @@ namespace console_demo
             {
                 //StringBuilder sb = new StringBuilder("filein @\"" + scriptPath + "\"\r\n");
                 StringBuilder sb = new StringBuilder("teapot()\r\n");
-                Send2Max.Send(sb,p.MainWindowHandle);
+                Send2Max.SendCommand(sb,p.MainWindowHandle);
             }
 
             Console.WriteLine("Press a key to exit the program");
