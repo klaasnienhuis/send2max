@@ -25,10 +25,10 @@ namespace console_demo
         /// <summary>
         /// Send a message to a window.
         /// </summary>
-        /// <param name="hwnd"></param>
+        /// <param name="hwnd">the handle of the window</param>
         /// <param name="msg"></param>
         /// <param name="messageLength"></param>
-        /// <param name="theMessage"></param>
+        /// <param name="theMessage">the actual message</param>
         /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hwnd, int msg, IntPtr messageLength, [MarshalAs(UnmanagedType.LPStr)] string theMessage);
@@ -94,6 +94,16 @@ namespace console_demo
             }
             return true;
         }
+
+        private static Process Get3dsmaxHandle()
+        {
+            Process[] myMax = Process.GetProcessesByName("3dsmax");
+            if (myMax.Length == 0) return null;
+            if (myMax[0] != null) return myMax[0];
+            if (myMax[0] == null) return null;
+            return null;
+        }
+
 
         /// <summary>
         /// Send a message to the script editor of 3dsMax. Uses the first open 3dsMax
