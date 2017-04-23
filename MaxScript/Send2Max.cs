@@ -93,10 +93,6 @@ namespace MaxScript
         {
             Process[] myMax = Process.GetProcessesByName("3dsmax");
             return myMax;
-            //if (myMax.Length == 0) return null;
-            //if (myMax[0] != null) return myMax[0];
-            //if (myMax[0] == null) return null;
-            //return null;
         }
 
 
@@ -106,12 +102,8 @@ namespace MaxScript
         /// </summary>
         /// <param name="theScript"></param>
         /// <returns></returns>
-        public static int Send(StringBuilder theScript, IntPtr mawWindowHandle)
+        public static void Send(StringBuilder theScript, IntPtr mawWindowHandle)
         {
-            int result = 0;
-
-
-
             //find a script editor. There are multiple, one will do
             SearchData sd = GetAllChildHandles(mawWindowHandle, "MXS_Scintilla");
 
@@ -119,13 +111,9 @@ namespace MaxScript
             Console.WriteLine("Script sent: {0}", theScript.ToString());
 
             //first send the script
-            result = SendMessage(sd.hWnd, WM_SETTEXT, (IntPtr)theScript.Length, theScript.ToString());
+            SendMessage(sd.hWnd, WM_SETTEXT, (IntPtr)theScript.Length, theScript.ToString());
             //then press enter to execute
-            result = SendMessage(sd.hWnd, WM_CHAR, (IntPtr)VK_RETURN, null);
-
-
-
-            return result;
+            SendMessage(sd.hWnd, WM_CHAR, (IntPtr)VK_RETURN, null);
         }
 
     }

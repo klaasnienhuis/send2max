@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
+using MaxScript;
 
 namespace console_demo
 {
@@ -15,7 +14,7 @@ namespace console_demo
         static void Main(string[] args)
         {
             //First find the 3dsMax processes running
-            Process[] processes = MaxScript.Send2Max.Get3dsMaxProcesses();
+            Process[] processes = Send2Max.Get3dsMaxProcesses();
             List<Process> scriptTargetProcess = new List<Process>();
 
             //Logic going through three scenarios: max isn't running, one max is running, multiple maxes are running
@@ -62,9 +61,7 @@ namespace console_demo
             {
                 //StringBuilder sb = new StringBuilder("filein @\"" + scriptPath + "\"\r\n");
                 StringBuilder sb = new StringBuilder("teapot()\r\n");
-                int result = MaxScript.Send2Max.Send(sb,p.MainWindowHandle);
-                Console.WriteLine("Result: {0}", result.ToString());
-
+                Send2Max.Send(sb,p.MainWindowHandle);
             }
 
             Console.WriteLine("Press a key to exit the program");
